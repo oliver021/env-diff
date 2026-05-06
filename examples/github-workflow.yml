@@ -16,7 +16,7 @@ jobs:
       # Audit local env files and upload findings to GitHub code-scanning.
       - name: Run env-diff audit
         run: |
-          npx -y @node-utils/env-diff audit .env.example \
+          npx -y env-diff audit .env.example \
             --output sarif \
             --min-severity medium > env-diff.sarif
         continue-on-error: true
@@ -30,6 +30,6 @@ jobs:
       # in staging or example files.
       - name: Compare env files
         run: |
-          npx -y @node-utils/env-diff compare \
+          npx -y env-diff compare \
             .env.example .env.staging .env.production \
             --ignore-values --fail-on-diff

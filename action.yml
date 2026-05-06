@@ -36,7 +36,7 @@ runs:
         if [ -n "${{ inputs.baseline }}" ]; then BASELINE_FLAG="--baseline ${{ inputs.baseline }}"; fi
         FAIL_FLAG=""
         if [ "${{ inputs.fail-on-audit }}" = "true" ]; then FAIL_FLAG="--fail-on-audit"; fi
-        npx -y @node-utils/env-diff audit "${{ inputs.env-file }}" \
+        npx -y env-diff audit "${{ inputs.env-file }}" \
           --readme "${{ inputs.readme }}" \
           --min-severity "${{ inputs.min-severity }}" \
           --output sarif \
