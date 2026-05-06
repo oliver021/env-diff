@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert';
 import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
-const cli = path.resolve('dist/src/index.js');
-const fx = path.resolve('test/fixtures/three-way');
+const cli = fileURLToPath(new URL('../src/index.js', import.meta.url));
+const fx = fileURLToPath(new URL('./fixtures/three-way', import.meta.url));
 
 function run(args: string[]): { stdout: string; status: number } {
   try {

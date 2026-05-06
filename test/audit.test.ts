@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { parseFile } from '../src/utils/parser.js';
 import { scanSecrets, checkReadmeDrift } from '../src/utils/scanner.js';
 
-const fixturesRoot = path.resolve('test/fixtures');
+const fixturesRoot = fileURLToPath(new URL('./fixtures', import.meta.url));
 
 test('clean fixture produces no leak findings', async () => {
   const env = await parseFile(path.join(fixturesRoot, 'clean/.env'));
