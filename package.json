@@ -1,6 +1,6 @@
 {
   "name": "@node-utils/env-diff",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Security & Drift Monitor for Secrets and Environment Files",
   "type": "module",
   "engines": {
