@@ -1,4 +1,4 @@
-name: env-drift
+name: @oliver021/env-diff
 on: [push, pull_request]
 
 jobs:
@@ -14,22 +14,22 @@ jobs:
           node-version: '20'
 
       # Audit local env files and upload findings to GitHub code-scanning.
-      - name: Run env-drift audit
+      - name: Run @oliver021/env-diff audit
         run: |
-          npx -y env-drift audit .env.example \
+          npx -y @oliver021/env-diff audit .env.example \
             --output sarif \
-            --min-severity medium > env-drift.sarif
+            --min-severity medium > @oliver021/env-diff.sarif
         continue-on-error: true
 
       - name: Upload SARIF
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: env-drift.sarif
+          sarif_file: @oliver021/env-diff.sarif
 
       # Multi-file matrix diff: catch keys present in production but missing
       # in staging or example files.
       - name: Compare env files
         run: |
-          npx -y env-drift compare \
+          npx -y @oliver021/env-diff compare \
             .env.example .env.staging .env.production \
             --ignore-values --fail-on-diff

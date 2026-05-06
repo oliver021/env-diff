@@ -1,7 +1,7 @@
-- id: env-drift-audit
-  name: env-drift audit
+- id: env-diff-audit
+  name: env-diff audit
   description: Audit staged environment files for leaked secrets, gitignore safety, and doc drift.
-  entry: env-drift audit
+  entry: env-diff audit
   language: node
   files: '\.env(\..+)?$'
   pass_filenames: true

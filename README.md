@@ -1,8 +1,8 @@
-# env-drift
+# @oliver021/env-diff
 
 **Stop secrets from leaking. Stop environments from drifting.**
 
-`env-drift` is a zero-dependency CLI that keeps your `.env` files honest — it diffs any number of environment files at once, audits for leaked secrets, and integrates with GitHub Actions in a single `npx` command.
+`@oliver021/env-diff` is a zero-dependency CLI that keeps your `.env` files honest — it diffs any number of environment files at once, audits for leaked secrets, and integrates with GitHub Actions in a single `npx` command.
 
 ---
 
@@ -10,16 +10,16 @@
 
 ```bash
 # Compare two files
-npx env-drift compare .env .env.production
+npx @oliver021/env-diff compare .env .env.production
 
 # Compare three files side by side (matrix view)
-npx env-drift compare .env .env.staging .env.production
+npx @oliver021/env-diff compare .env .env.staging .env.production
 
 # Audit a file for leaked secrets and doc drift
-npx env-drift audit .env
+npx @oliver021/env-diff audit .env
 
 # Push local vars to Vercel (dry-run first)
-VERCEL_TOKEN=xxx npx env-drift sync vercel .env --dry-run
+VERCEL_TOKEN=xxx npx @oliver021/env-diff sync vercel .env --dry-run
 ```
 
 ---
@@ -28,10 +28,10 @@ VERCEL_TOKEN=xxx npx env-drift sync vercel .env --dry-run
 
 ```bash
 # Project-local (recommended for CI)
-npm install -D env-drift
+npm install -D @oliver021/env-diff
 
 # Or run on-demand with npx — no install needed
-npx env-drift <command>
+npx @oliver021/env-diff <command>
 ```
 
 **Requires Node.js 20+.**
@@ -45,7 +45,7 @@ npx env-drift <command>
 Diff two or more environment files. When you pass three or more files, you get a matrix view with every key as a row and every file as a column.
 
 ```bash
-env-drift compare <file1> <file2> [file3 ...] [options]
+@oliver021/env-diff compare <file1> <file2> [file3 ...] [options]
 ```
 
 | Option | Description |
@@ -100,7 +100,7 @@ Scans your env file for three categories of problems:
 3. **Documentation drift** — checks that every key in your `README.md` exists locally, and every local key is documented
 
 ```bash
-env-drift audit [envFile] [options]
+@oliver021/env-diff audit [envFile] [options]
 ```
 
 | Option | Description |
@@ -140,7 +140,7 @@ Found 2 audit issue(s):
 Push or pull environment variables between your local file and a cloud provider.
 
 ```bash
-env-drift sync <provider> [envFile] [options]
+@oliver021/env-diff sync <provider> [envFile] [options]
 ```
 
 | Option | Description |
@@ -159,13 +159,13 @@ env-drift sync <provider> [envFile] [options]
 
 ```bash
 # See what would change
-VERCEL_TOKEN=xxx env-drift sync vercel .env --project my-app --dry-run
+VERCEL_TOKEN=xxx @oliver021/env-diff sync vercel .env --project my-app --dry-run
 
 # Push for real (prompts for confirmation)
-VERCEL_TOKEN=xxx env-drift sync vercel .env --project my-app
+VERCEL_TOKEN=xxx @oliver021/env-diff sync vercel .env --project my-app
 
 # Pull production vars for review
-VERCEL_TOKEN=xxx env-drift sync vercel .env.production --pull
+VERCEL_TOKEN=xxx @oliver021/env-diff sync vercel .env.production --pull
 ```
 
 > Pull mode writes to `.env.production.new` — review and rename it yourself. This prevents accidental overwrites.
@@ -197,10 +197,10 @@ Snapshot the current state of findings so existing issues are accepted but new o
 
 ```bash
 # Create baseline from current findings
-env-drift audit .env --baseline-create .envdiff-baseline.json
+@oliver021/env-diff audit .env --baseline-create .envdiff-baseline.json
 
 # Re-audit — existing findings suppressed, new ones surface
-env-drift audit .env --baseline .envdiff-baseline.json --fail-on-audit
+@oliver021/env-diff audit .env --baseline .envdiff-baseline.json --fail-on-audit
 ```
 
 Commit `.envdiff-baseline.json` to track accepted findings over time.
@@ -231,16 +231,16 @@ Every finding carries a `ruleId` you can reference in your ignore file or baseli
 Add audit findings to GitHub's **Security → Code scanning** tab:
 
 ```yaml
-- name: Run env-drift audit
+- name: Run @oliver021/env-diff audit
   run: |
-    npx -y env-drift audit .env.example \
-      --output sarif > env-drift.sarif
+    npx -y @oliver021/env-diff audit .env.example \
+      --output sarif > @oliver021/env-diff.sarif
   continue-on-error: true
 
 - name: Upload SARIF
   uses: github/codeql-action/upload-sarif@v3
   with:
-    sarif_file: env-drift.sarif
+    sarif_file: @oliver021/env-diff.sarif
 ```
 
 A ready-to-use composite action is included in this repo (`action.yml`). See [`examples/github-workflow.yml`](examples/github-workflow.yml) for a full workflow.
@@ -251,10 +251,10 @@ If you use [pre-commit](https://pre-commit.com), add this to your `.pre-commit-c
 
 ```yaml
 repos:
-  - repo: https://github.com/node-utils/env-drift
+  - repo: https://github.com/node-utils/@oliver021/env-diff
     rev: v1.0.0
     hooks:
-      - id: env-drift-audit
+      - id: @oliver021/env-diff-audit
 ```
 
 The hook runs `audit --fail-on-audit` on every staged `.env*` file before a commit lands.
@@ -277,20 +277,20 @@ Both `compare` and `audit` support `--output json` for scripting. `audit` also s
 
 ```bash
 # Pipe audit results into jq
-env-drift audit .env --output json --no-gitignore | jq '.issues[] | select(.severity == "high")'
+@oliver021/env-diff audit .env --output json --no-gitignore | jq '.issues[] | select(.severity == "high")'
 
 # Count SARIF results
-env-drift audit .env --output sarif | jq '.runs[0].results | length'
+@oliver021/env-diff audit .env --output sarif | jq '.runs[0].results | length'
 ```
 
 ---
 
 ## Verified secret detection
 
-Add `--verify-secrets` to have `env-drift` call each provider's API and confirm whether a detected key is **actually live**. A live key is upgraded to `critical` severity.
+Add `--verify-secrets` to have `@oliver021/env-diff` call each provider's API and confirm whether a detected key is **actually live**. A live key is upgraded to `critical` severity.
 
 ```bash
-env-drift audit .env --verify-secrets --fail-on-audit --min-severity critical
+@oliver021/env-diff audit .env --verify-secrets --fail-on-audit --min-severity critical
 ```
 
 Supported providers for live verification: **Stripe**, **GitHub**. AWS support coming soon.
@@ -301,7 +301,7 @@ Supported providers for live verification: **Stripe**, **GitHub**. AWS support c
 
 ## Supported file formats
 
-`env-drift` auto-detects the format from the file extension. You can override it with `-f, --format`.
+`@oliver021/env-diff` auto-detects the format from the file extension. You can override it with `-f, --format`.
 
 | Extension | Format |
 |---|---|

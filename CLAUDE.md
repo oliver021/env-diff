@@ -14,7 +14,7 @@ Tests use Node's built-in `test` module — no external framework. There is no l
 
 ## Architecture
 
-`env-drift` is a CLI tool for detecting environment configuration drift and secret leaks. Entry point is `src/index.ts` (Commander-based CLI with three commands).
+`env-diff` is a CLI tool for detecting environment configuration drift and secret leaks. Entry point is `src/index.ts` (Commander-based CLI with three commands).
 
 **Commands → files:**
 - `compare` (`src/commands/compare.ts`) — diffs two env files for key/value drift; supports `--ignore-values` and `--fail-on-diff`

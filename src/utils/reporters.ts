@@ -44,7 +44,7 @@ export function toSarif(issues: AuditIssue[], toolVersion = '1.0.0'): string {
     runs: [{
       tool: {
         driver: {
-          name: 'env-drift',
+          name: 'env-diff',
           version: toolVersion,
           informationUri: 'https://github.com/oliver021/env-diff',
           rules

@@ -25,7 +25,7 @@ test('toSarif produces a valid SARIF 2.1.0 envelope', () => {
   const sarif = JSON.parse(toSarif(issues));
   assert.strictEqual(sarif.version, '2.1.0');
   assert.ok(Array.isArray(sarif.runs));
-  assert.strictEqual(sarif.runs[0].tool.driver.name, 'env-drift');
+  assert.strictEqual(sarif.runs[0].tool.driver.name, 'env-diff');
   assert.strictEqual(sarif.runs[0].results.length, 2);
   assert.strictEqual(sarif.runs[0].results[0].level, 'error');
   assert.strictEqual(sarif.runs[0].results[1].level, 'note');

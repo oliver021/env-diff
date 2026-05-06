@@ -20,7 +20,7 @@ async function verifyStripe(value: string): Promise<VerifyResult> {
 async function verifyGithub(value: string): Promise<VerifyResult> {
   try {
     const res = await fetch('https://api.github.com/user', {
-      headers: { Authorization: `Bearer ${value}`, 'User-Agent': 'env-drift' }
+      headers: { Authorization: `Bearer ${value}`, 'User-Agent': 'env-diff' }
     });
     if (res.status === 200) return { live: true, detail: 'GitHub API accepted the token.' };
     return { live: false };
