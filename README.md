@@ -10,16 +10,16 @@
 
 ```bash
 # Compare two files
-npx @node-utils/env-diff compare .env .env.production
+npx env-diff compare .env .env.production
 
 # Compare three files side by side (matrix view)
-npx @node-utils/env-diff compare .env .env.staging .env.production
+npx env-diff compare .env .env.staging .env.production
 
 # Audit a file for leaked secrets and doc drift
-npx @node-utils/env-diff audit .env
+npx env-diff audit .env
 
 # Push local vars to Vercel (dry-run first)
-VERCEL_TOKEN=xxx npx @node-utils/env-diff sync vercel .env --dry-run
+VERCEL_TOKEN=xxx npx env-diff sync vercel .env --dry-run
 ```
 
 ---
@@ -28,10 +28,10 @@ VERCEL_TOKEN=xxx npx @node-utils/env-diff sync vercel .env --dry-run
 
 ```bash
 # Project-local (recommended for CI)
-npm install -D @node-utils/env-diff
+npm install -D env-diff
 
 # Or run on-demand with npx — no install needed
-npx @node-utils/env-diff <command>
+npx env-diff <command>
 ```
 
 **Requires Node.js 20+.**
@@ -233,7 +233,7 @@ Add audit findings to GitHub's **Security → Code scanning** tab:
 ```yaml
 - name: Run env-diff audit
   run: |
-    npx -y @node-utils/env-diff audit .env.example \
+    npx -y env-diff audit .env.example \
       --output sarif > env-diff.sarif
   continue-on-error: true
 
