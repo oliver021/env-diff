@@ -1,0 +1,39 @@
+{
+  "name": "@node-utils/env-diff",
+  "version": "1.0.2",
+  "description": "Security & Drift Monitor for Secrets and Environment Files",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "main": "./dist/index.js",
+  "bin": {
+    "env-diff": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "node --test dist/test/*.test.js"
+  },
+  "keywords": [
+    "dotenv",
+    "drift",
+    "security",
+    "audit",
+    "cli",
+    "monorepo"
+  ],
+  "author": "Antigravity",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^12.0.0",
+    "dotenv": "^16.4.5",
+    "js-yaml": "^4.1.0",
+    "picocolors": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3"
+  }
+}

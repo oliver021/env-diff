@@ -1,0 +1,45 @@
+name: 'env-diff audit'
+description: 'Run env-diff security audit on environment files and upload SARIF results.'
+author: 'env-diff'
+inputs:
+  env-file:
+    description: 'Path to the environment file to audit'
+    required: false
+    default: '.env'
+  readme:
+    description: 'Path to README.md for documentation drift checks'
+    required: false
+    default: 'README.md'
+  min-severity:
+    description: 'Minimum severity to report: low | medium | high | critical'
+    required: false
+    default: 'medium'
+  baseline:
+    description: 'Path to a baseline file of accepted findings'
+    required: false
+    default: ''
+  fail-on-audit:
+    description: 'Fail the workflow when findings at/above min-severity are present'
+    required: false
+    default: 'true'
+  sarif-file:
+    description: 'Output path for SARIF results'
+    required: false
+    default: 'env-diff.sarif'
+runs:
+  using: 'composite'
+  steps:
+    - name: Run env-diff audit
+      shell: bash
+      run: |
+        BASELINE_FLAG=""
+        if [ -n "${{ inputs.baseline }}" ]; then BASELINE_FLAG="--baseline ${{ inputs.baseline }}"; fi
+        FAIL_FLAG=""
+        if [ "${{ inputs.fail-on-audit }}" = "true" ]; then FAIL_FLAG="--fail-on-audit"; fi
+        npx -y @node-utils/env-diff audit "${{ inputs.env-file }}" \
+          --readme "${{ inputs.readme }}" \
+          --min-severity "${{ inputs.min-severity }}" \
+          --output sarif \
+          $BASELINE_FLAG > "${{ inputs.sarif-file }}" || EXIT=$?
+        # Always upload SARIF, even if audit failed
+        if [ -n "$EXIT" ] && [ "$FAIL_FLAG" = "--fail-on-audit" ]; then exit $EXIT; fi
