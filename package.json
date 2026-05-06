@@ -1,5 +1,5 @@
 {
-  "name": "@oliver021/env-diff",
+  "name": "env-drift",
   "version": "1.0.6",
   "description": "Security & Drift Monitor for Secrets and Environment Files",
   "type": "module",
@@ -8,7 +8,7 @@
   },
   "main": "./dist/index.js",
   "bin": {
-    "env-diff": "./dist/index.js"
+    "env-drift": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",

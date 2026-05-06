@@ -8,7 +8,7 @@ import { syncCommand } from './commands/sync.js';
 const program = new Command();
 
 program
-  .name('env-diff')
+  .name('env-drift')
   .description('Security & Drift Monitor for Secrets and Environment Files')
   .version('1.0.0');
 
