@@ -26,6 +26,14 @@
   ],
   "author": "Antigravity",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oliver021/env-diff"
+  },
+  "homepage": "https://github.com/oliver021/env-diff#readme",
+  "bugs": {
+    "url": "https://github.com/oliver021/env-diff/issues"
+  },
   "dependencies": {
     "commander": "^12.0.0",
     "dotenv": "^16.4.5",
