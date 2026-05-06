@@ -1,5 +1,5 @@
 {
-  "name": "env-diff",
+  "name": "@oliver021/env-diff",
   "version": "1.0.6",
   "description": "Security & Drift Monitor for Secrets and Environment Files",
   "type": "module",

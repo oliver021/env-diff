@@ -1,6 +1,6 @@
-name: 'env-diff audit'
-description: 'Run env-diff security audit on environment files and upload SARIF results.'
-author: 'env-diff'
+name: '@oliver021/env-diff audit'
+description: 'Run @oliver021/env-diff security audit on environment files and upload SARIF results.'
+author: '@oliver021/env-diff'
 inputs:
   env-file:
     description: 'Path to the environment file to audit'
@@ -25,18 +25,18 @@ inputs:
   sarif-file:
     description: 'Output path for SARIF results'
     required: false
-    default: 'env-diff.sarif'
+    default: '@oliver021/env-diff.sarif'
 runs:
   using: 'composite'
   steps:
-    - name: Run env-diff audit
+    - name: Run @oliver021/env-diff audit
       shell: bash
       run: |
         BASELINE_FLAG=""
         if [ -n "${{ inputs.baseline }}" ]; then BASELINE_FLAG="--baseline ${{ inputs.baseline }}"; fi
         FAIL_FLAG=""
         if [ "${{ inputs.fail-on-audit }}" = "true" ]; then FAIL_FLAG="--fail-on-audit"; fi
-        npx -y env-diff audit "${{ inputs.env-file }}" \
+        npx -y @oliver021/env-diff audit "${{ inputs.env-file }}" \
           --readme "${{ inputs.readme }}" \
           --min-severity "${{ inputs.min-severity }}" \
           --output sarif \
