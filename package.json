@@ -12,8 +12,9 @@
   },
   "scripts": {
     "build": "tsc",
+    "copy:fixtures": "node -e \"require('fs').cpSync('test/fixtures', 'dist/test/fixtures', {recursive: true, force: true})\"",
     "watch": "tsc -w",
-    "test": "node --test dist/test/*.test.js"
+    "test": "npm run build && npm run copy:fixtures && node --test dist/test/*.test.js"
   },
   "keywords": [
     "dotenv",
