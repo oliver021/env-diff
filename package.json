@@ -8,7 +8,7 @@
   },
   "main": "./dist/index.js",
   "bin": {
-    "env-diff": "./dist/index.js"
+    "env-drift": "./dist/index.js"
   },
   "scripts": {
     "build": "tsc",
