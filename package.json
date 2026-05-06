@@ -1,6 +1,6 @@
 {
   "name": "@oliver021/env-drift",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Security & Drift Monitor for Secrets and Environment Files",
   "type": "module",
   "engines": {
